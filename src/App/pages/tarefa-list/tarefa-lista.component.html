@@ -1,0 +1,100 @@
+<div class="lista-page">
+  <div class="page-header">
+    <div>
+      <h1>Tarefas</h1>
+      <p>{{ tarefasFiltradas.length }} tarefa(s) encontrada(s)</p>
+    </div>
+    <a routerLink="/tarefa/nova" class="btn btn-primary">+ Nova Tarefa</a>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-card">
+    <div class="busca-wrap">
+      <input
+        type="text"
+        placeholder="🔍 Buscar por título ou descrição..."
+        [(ngModel)]="busca"
+        (ngModelChange)="aplicarFiltros()"
+        class="input-busca"
+      />
+    </div>
+
+    <div class="filtros-row">
+      <select [(ngModel)]="filtroCategoria" (ngModelChange)="aplicarFiltros()" class="select-filtro">
+        <option value="">Todas as Categorias</option>
+        <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+      </select>
+
+      <select [(ngModel)]="filtroPrioridade" (ngModelChange)="aplicarFiltros()" class="select-filtro">
+        <option value="">Todas as Prioridades</option>
+        <option *ngFor="let prio of prioridades" [value]="prio">{{ prio }}</option>
+      </select>
+
+      <div class="status-tabs">
+        <button
+          [ngClass]="{ active: filtroStatus === 'todas' }"
+          (click)="filtroStatus = 'todas'; aplicarFiltros()">
+          Todas
+        </button>
+        <button
+          [ngClass]="{ active: filtroStatus === 'pendentes' }"
+          (click)="filtroStatus = 'pendentes'; aplicarFiltros()">
+          Pendentes
+        </button>
+        <button
+          [ngClass]="{ active: filtroStatus === 'concluidas' }"
+          (click)="filtroStatus = 'concluidas'; aplicarFiltros()">
+          Concluídas
+        </button>
+      </div>
+
+      <button class="btn-limpar" (click)="limparFiltros()">Limpar Filtros</button>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div *ngIf="tarefasFiltradas.length === 0" class="empty-state">
+    <span class="empty-icon">📭</span>
+    <p>Nenhuma tarefa encontrada.</p>
+    <a routerLink="/tarefa/nova" class="btn btn-primary">Criar primeira tarefa</a>
+  </div>
+
+  <div class="tarefas-grid">
+    <div
+      *ngFor="let tarefa of tarefasFiltradas"
+      class="tarefa-card"
+      [ngClass]="{ concluida: tarefa.concluida }">
+
+      <div class="card-header">
+        <label class="checkbox-wrap">
+          <input
+            type="checkbox"
+            [checked]="tarefa.concluida"
+            (change)="toggleConcluida(tarefa.id)"
+          />
+          <span class="checkmark"></span>
+        </label>
+
+        <div class="badges">
+          <span class="badge-categoria">{{ tarefa.categoria }}</span>
+          <span class="badge-prio" [ngClass]="corPrioridade(tarefa.prioridade)">
+            {{ tarefa.prioridade }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <h3 [ngClass]="{ riscado: tarefa.concluida }">{{ tarefa.titulo }}</h3>
+        <p *ngIf="tarefa.descricao" class="descricao">{{ tarefa.descricao }}</p>
+      </div>
+
+      <div class="card-footer">
+        <span class="data">📅 {{ tarefa.dataCriacao | date:'dd/MM/yyyy' }}</span>
+        <div class="card-actions">
+          <a [routerLink]="['/tarefa/editar', tarefa.id]" class="btn-action btn-editar" title="Editar">✏️</a>
+          <button class="btn-action btn-excluir" (click)="excluir(tarefa.id)" title="Excluir">🗑️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

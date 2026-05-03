@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="nav-icon">✓</span>
+    <span class="nav-title">TaskFlow</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a routerLink="/tarefas" routerLinkActive="active">
+        Tarefas
+      </a>
+    </li>
+    <li>
+      <a routerLink="/tarefa/nova" class="btn-nova">
+        + Nova Tarefa
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <p>TaskFlow — Sistema de Gerenciamento de Tarefas</p>
+</footer>

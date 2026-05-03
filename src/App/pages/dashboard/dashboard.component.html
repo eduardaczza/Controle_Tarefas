@@ -1,0 +1,65 @@
+<div class="dashboard">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Visão geral das suas tarefas</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card stat-total">
+      <div class="stat-icon">📋</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.total }}</span>
+        <span class="stat-label">Total de Tarefas</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-pendentes">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.pendentes }}</span>
+        <span class="stat-label">Pendentes</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-concluidas">
+      <div class="stat-icon">✅</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stats.concluidas }}</span>
+        <span class="stat-label">Concluídas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span>Progresso Geral</span>
+      <span class="progress-pct">{{ percentualConcluido }}%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="percentualConcluido"></div>
+    </div>
+  </div>
+
+  <div class="prioridade-section">
+    <h2>Tarefas por Prioridade</h2>
+    <div class="prioridade-grid">
+      <div class="prio-card prio-alta">
+        <span class="prio-count">{{ stats.alta }}</span>
+        <span class="prio-label">🔴 Alta</span>
+      </div>
+      <div class="prio-card prio-media">
+        <span class="prio-count">{{ stats.media }}</span>
+        <span class="prio-label">🟡 Média</span>
+      </div>
+      <div class="prio-card prio-baixa">
+        <span class="prio-count">{{ stats.baixa }}</span>
+        <span class="prio-label">🟢 Baixa</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a routerLink="/tarefa/nova" class="btn btn-primary">+ Nova Tarefa</a>
+    <a routerLink="/tarefas" class="btn btn-outline">Ver Todas as Tarefas</a>
+  </div>
+</div>

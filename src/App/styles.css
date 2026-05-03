@@ -1,0 +1,6 @@
+/* Estilos globais mínimos — o restante está nos componentes */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}

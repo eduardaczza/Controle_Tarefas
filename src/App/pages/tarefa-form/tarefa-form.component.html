@@ -1,0 +1,97 @@
+<div class="form-page">
+  <div class="page-header">
+    <h1>{{ modoEdicao ? 'Editar Tarefa' : 'Nova Tarefa' }}</h1>
+    <p>{{ modoEdicao ? 'Atualize as informações da tarefa' : 'Preencha os dados para criar uma nova tarefa' }}</p>
+  </div>
+
+  <div class="form-card">
+    <form #tarefaForm="ngForm" (ngSubmit)="salvar(tarefaForm)" novalidate>
+
+      <!-- Título -->
+      <div class="form-group">
+        <label for="titulo">Título <span class="required">*</span></label>
+        <input
+          id="titulo"
+          type="text"
+          name="titulo"
+          [(ngModel)]="form.titulo"
+          #titulo="ngModel"
+          required
+          minlength="3"
+          placeholder="Digite o título da tarefa"
+          class="form-control"
+          [ngClass]="{ 'input-error': titulo.invalid && titulo.touched }"
+        />
+        <div *ngIf="titulo.invalid && titulo.touched" class="error-msg">
+          <span *ngIf="titulo.errors?.['required']">Título é obrigatório.</span>
+          <span *ngIf="titulo.errors?.['minlength']">Título deve ter no mínimo 3 caracteres.</span>
+        </div>
+      </div>
+
+      <!-- Descrição -->
+      <div class="form-group">
+        <label for="descricao">Descrição <span class="optional">(opcional)</span></label>
+        <textarea
+          id="descricao"
+          name="descricao"
+          [(ngModel)]="form.descricao"
+          placeholder="Adicione uma descrição..."
+          class="form-control"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Categoria e Prioridade lado a lado -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="categoria">Categoria <span class="required">*</span></label>
+          <select
+            id="categoria"
+            name="categoria"
+            [(ngModel)]="form.categoria"
+            #categoria="ngModel"
+            required
+            class="form-control"
+            [ngClass]="{ 'input-error': categoria.invalid && categoria.touched }"
+          >
+            <option value="" disabled selected>Selecione uma categoria</option>
+            <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+          </select>
+          <div *ngIf="categoria.invalid && categoria.touched" class="error-msg">
+            Categoria é obrigatória.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="prioridade">Prioridade <span class="required">*</span></label>
+          <select
+            id="prioridade"
+            name="prioridade"
+            [(ngModel)]="form.prioridade"
+            #prioridade="ngModel"
+            required
+            class="form-control"
+            [ngClass]="{ 'input-error': prioridade.invalid && prioridade.touched }"
+          >
+            <option value="" disabled selected>Selecione a prioridade</option>
+            <option *ngFor="let prio of prioridades" [value]="prio">{{ prio }}</option>
+          </select>
+          <div *ngIf="prioridade.invalid && prioridade.touched" class="error-msg">
+            Prioridade é obrigatória.
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="tarefaForm.invalid">
+          {{ modoEdicao ? '💾 Salvar Alterações' : '✓ Criar Tarefa' }}
+        </button>
+        <button type="button" class="btn btn-outline" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
